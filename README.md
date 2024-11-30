@@ -2,7 +2,10 @@
 # Развертывание на Nginx + uWSGI
 (основано на https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 
-Для подключения к postgresql следует изменить settings.py в настройках проекта Django:
+Для использования postgresql в проекте Django необходимо:
+
+установить psycopg2;
+следует изменить settings.py в настройках проекта:
 
 ```
 DATABASES = {
