@@ -1,7 +1,7 @@
 
 # Развертывание на Nginx + uWSGI
 (основано на https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
-> README в процессе доработки..., буду рад вашим замечаниям и правкам. :U+1F603
+> README в процессе доработки..., буду рад вашим замечаниям и правкам. U+1F603
 
 
 
