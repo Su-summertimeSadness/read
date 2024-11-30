@@ -42,10 +42,11 @@ the web client <-> the web server <-> the socket <-> uwsgi <-> Django
 ### <a id="title1.1"> 1.1. Прежде чем приступить к настройке uWSGI</a> 
 
 Убедитесь, что вы находитесь в виртуальной среде (virtualenv) для программного обеспечения, которое нам нужно установить (позже мы опишем, как установить общесистемный uwsgi):
-
+```
 virtualenv uwsgi-tutorial
 cd uwsgi-tutorial
 source bin/activate
+```
 
 ---
 
