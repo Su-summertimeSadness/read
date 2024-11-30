@@ -9,28 +9,33 @@ the web client <-> the web server <-> the socket <-> uwsgi <-> Django
 ## Оглавление
   [1. Getting Started:](#title1)
   + [1.1 Прежде чем приступить к настройке uWSGI](#title1.1)
-  + 1.2 Django
-  ### 2. Базовая установка и настройка uWSGI
-   + 2.1 Установите uWSGI в virtualenv
-   + 2.2 Протестируйте свой проект Django
-   ### 3. Основы работы с nginx
-   + 3.1 Установите nginx
-   +  3.2 Настройте nginx для вашего сайта
-   +  3.3 Развертывание статических файлов
-   + 3.4 Базовый тест nginx
-   ###  4. Nginx, uWSGI и test.py
-   + 4.1 Запуск приложения Django с помощью uwsgi и nginx
-   + 4.2 Настройка uWSGI на запуск с помощью .ini файла
-   +  4.3 Установите uWSGI на всю систему
-   + 4.4 Режим императора
-   ### 5. Создание файла юнитов systemd для uWSGI  
+  + [1.2 Django](#title1.2)
+    
+  [2. Базовая установка и настройка uWSGI](#title2)
+   + [2.1 Установите uWSGI в virtualenv](#title2.1)
+   + [2.2 Протестируйте свой проект Django](#title2.2)
+     
+  [3. Основы работы с nginx](#title3)
+   + [3.1 Установите nginx](#title3.1)
+   +  [3.2 Настройте nginx для вашего сайта](#title3.2)
+   +  [3.3 Развертывание статических файлов](#title3.3)
+   + [3.4 Базовый тест nginx](#title3.4)
+     
+  [4. Nginx, uWSGI и test.py](#title4)
+   + [4.1 Запуск приложения Django с помощью uwsgi и nginx](#title4.1)
+   + [4.2 Настройка uWSGI на запуск с помощью .ini файла](#title4.2)
+   +  [4.3 Установите uWSGI на всю систему](#title4.3)
+   + [4.4 Режим императора](#title4.4)
+     
+  [5. Создание файла юнитов systemd для uWSGI](#title5)
+
 
    
    
-<a id="title1">Getting Started:</a> 
+## <a id="title1">1. Getting Started:</a> 
 
 
-<a id="title1.1"> 1.1. Прежде чем приступить к настройке uWSGI</a> 
+### <a id="title1.1"> 1.1. Прежде чем приступить к настройке uWSGI</a> 
 
 Убедитесь, что вы находитесь в виртуальной среде (virtualenv) для программного обеспечения, которое нам нужно установить (позже мы опишем, как установить общесистемный uwsgi):
 
@@ -41,7 +46,7 @@ source bin/activate
 ---
 
 
-### 1.2 Django
+### <a id="title1.2">1.2 Django</a>
 
 Установите Django в virtualenv, создайте новый проект и перейдите в него:
 
@@ -51,8 +56,9 @@ cd mysite
 
 ---
 
-## Базовая установка и настройка uWSGI
-### 2.1 Установите uWSGI в virtualenv
+## <a id="title2">2. Базовая установка и настройка uWSGI</a>
+### <a id="title1.2">2.1 Установите uWSGI в virtualenv</a>
+
 pip install uwsgi
 Помните, что у вас должны быть установлены пакеты разработки Python. В случае Debian или производных от Debian систем, таких как Ubuntu, вам нужно установить pythonX.Y-dev, где X.Y - это ваша версия Python.
 
@@ -70,8 +76,8 @@ wsgi-file test.py: загрузить указанный файл, test.py
 http://localhost:8000
 
 ---
-
-### 2.2 Протестируйте свой проект Django
+### <a id="title2.2">2.2 Протестируйте свой проект Django</a>
+ 
 Теперь мы хотим, чтобы uWSGI делал то же самое, но запускал сайт Django вместо модуля test.py.
 
 Если вы еще не сделали этого, убедитесь, что ваш проект mysite действительно работает:
@@ -89,10 +95,10 @@ module mysite.wsgi: загрузка указанного модуля wsgi
 Обычно браузер не обращается напрямую к uWSGI. Это работа для веб-сервера, который будет выступать в качестве промежуточного звена.
 
 ---
+## <a id="title3">3 Основы работы с nginx </a>
+ 
+### <a id="title3.1">3.1 Установите nginx </a>
 
-## Основы работы с nginx
-
-### 3.1 Установите nginx
 
 
 sudo apt-get install nginx
@@ -109,7 +115,8 @@ sudo /etc/init.d/nginx start # запустите nginx
 
 ---
 
-### 3.2 Настройте nginx для вашего сайта
+### <a id="title3.2">3.2 Настройте nginx для сайта</a>
+
 
 
 Вам понадобится файл uwsgi_params, который можно найти в директории nginx в дистрибутиве uWSGI или на сайте https://github.com/nginx/nginx/blob/master/conf/uwsgi_params.
@@ -125,8 +132,8 @@ sudo /etc/init.d/nginx start # запустите nginx
 sudo ln -s /etc/nginx/sites-available/mysite_nginx.conf /etc/nginx/sites-enabled/
 
 ---
+### <a id="title3.3">3.3 Развертывание статических файлов</a>
 
-### 3.3 Развертывание статических файлов
 Перед запуском nginx необходимо собрать все статические файлы Django в папке static. Для этого сначала нужно отредактировать файл mysite/settings.py, добавив в него:
 
 STATIC_ROOT = os.path.join(BASE_DIR, «static/»)
@@ -136,8 +143,8 @@ python manage.py collectstatic
 
 ---
 
+### <a id="title3.4">3.4 Базовый тест nginx </a>
 
-#### 3.3.1. Базовый тест nginx:
 
 Перезапустите nginx:
 sudo /etc/init.d/nginx restart
@@ -148,8 +155,8 @@ sudo /etc/init.d/nginx restart
 
 ---
 
-
-##  Nginx, uWSGI и test.py
+### <a id="title4">4. Nginx, uWSGI и test.py </a>
+ 
 Давайте заставим nginx обратиться к приложению test.py «hello world».
 
 uwsgi --socket :8001 --wsgi-file test.py
@@ -159,7 +166,7 @@ socket :8001: использовать протокол uwsgi, порт 8001
 
 Тем временем nginx был настроен на взаимодействие с uWSGI через этот порт, а с внешним миром - через порт 8000. Посетите:
 
-http://example.com:8000/
+http://localhost.com:8000/
 
 чтобы проверить. И это наш стек:
 
