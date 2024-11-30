@@ -1,6 +1,9 @@
 
 # Развертывание на Nginx + uWSGI
+
+>> в процессе доработки, буду рад вашим замечаниям и правкам  
 (основано на https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
+
 
 ---
 
