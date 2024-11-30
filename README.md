@@ -71,7 +71,8 @@ cd mysite
 Помните, что у вас должны быть установлены пакеты разработки Python. В случае Debian или производных от Debian систем, таких как Ubuntu, вам нужно установить pythonX.Y-dev, где X.Y - это ваша версия Python.
 
 Запустите для проверки uWSGI:
-uwsgi --http :8000 --wsgi-file test.py
+
+`uwsgi --http :8000 --wsgi-file test.py`
 
 Опции означают:
 
@@ -81,7 +82,7 @@ wsgi-file test.py: загрузить указанный файл, test.py
 
 Это должно передать сообщение 'hello world' непосредственно в браузер на порт 8000. Посетите:
 
-http://localhost:8000
+`http://localhost:8000`
 
 ---
 ### <a id="title2.2">2.2 Протестируйте свой проект Django</a>
@@ -93,7 +94,7 @@ http://localhost:8000
 python manage.py runserver 0.0.0.0:8000
 И если это работает, запустите его с помощью uWSGI:
 
-uwsgi --http :8000 --module mysite.wsgi
+`uwsgi --http :8000 --module mysite.wsgi`
 
 module mysite.wsgi: загрузка указанного модуля wsgi
 
@@ -138,17 +139,18 @@ sudo /etc/init.d/nginx start # запустите nginx
 
 Сделайте ссылку на этот файл из /etc/nginx/sites-enabled, чтобы nginx мог его видеть:
 
-sudo ln -s /etc/nginx/sites-available/mysite_nginx.conf /etc/nginx/sites-enabled/
+`sudo ln -s /etc/nginx/sites-available/mysite_nginx.conf /etc/nginx/sites-enabled/`
 
 ---
 ### <a id="title3.3">3.3 Развертывание статических файлов</a>
 
 Перед запуском nginx необходимо собрать все статические файлы Django в папке static. Для этого сначала нужно отредактировать файл mysite/settings.py, добавив в него:
 
-STATIC_ROOT = os.path.join(BASE_DIR, «static/»)
+`STATIC_ROOT = os.path.join(BASE_DIR, «static/»)`
+
 а затем запустить
 
-python manage.py collectstatic
+`python manage.py collectstatic`
 
 ---
 
@@ -156,7 +158,8 @@ python manage.py collectstatic
 
 
 Перезапустите nginx:
-sudo /etc/init.d/nginx restart
+
+`sudo /etc/init.d/nginx restart`
 
 Чтобы проверить, правильно ли обслуживаются медиафайлы, добавьте изображение с именем media.png в каталог /path/to/your/project/project/media, а затем посетите http://example.com:8000/media/media.png - если это сработает, то вы будете знать, что nginx обслуживает файлы правильно.
 
@@ -168,14 +171,15 @@ sudo /etc/init.d/nginx restart
  
 Давайте заставим nginx обратиться к приложению test.py «hello world».
 
-uwsgi --socket :8001 --wsgi-file test.py
+`uwsgi --socket :8001 --wsgi-file test.py`
+
 Это почти то же самое, что и раньше, за исключением того, что в этот раз одна из опций отличается:
 
 socket :8001: использовать протокол uwsgi, порт 8001
 
 Тем временем nginx был настроен на взаимодействие с uWSGI через этот порт, а с внешним миром - через порт 8000. Посетите:
 
-http://localhost:8000/
+`http://localhost:8000/`
 
 чтобы проверить. И это наш стек:
 
@@ -189,15 +193,17 @@ http://localhost:8000/
 
 Отредактируйте файл mysite_nginx.conf, изменив его на соответствующий:
 
+```
 server unix:///path/to/your/mysite/mysite.sock; # для файлового сокета
 
 #server 127.0.0.1:8001; # для сокета веб-порта (мы будем использовать его в первую очередь)
+```
 
 и перезапустите nginx.
 
 Снова запустите uWSGI:
 
-uwsgi --socket mysite.sock --wsgi-file test.py
+`uwsgi --socket mysite.sock --wsgi-file test.py`
 
 
 На этот раз опция socket указывает uWSGI, какой файл использовать.
@@ -207,16 +213,17 @@ uwsgi --socket mysite.sock --wsgi-file test.py
 Если это не сработает
 Проверьте журнал ошибок nginx (/var/log/nginx/error.log). Если вы видите что-то вроде:
 
-connect() to unix:///path/to/your/mysite/mysite.sock failed (13: Permission
-отказано)
+`connect() to unix:///path/to/your/mysite/mysite.sock failed (13: Permission denied)`
+
 то, вероятно, вам нужно изменить права на сокет, чтобы nginx мог его использовать.
 
 Попробуйте:
 
-uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=666 # (очень разрешительно)
+`uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=666 # (очень разрешительно)`
+
 или:
 
-uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=664 # (более разумно).
+`uwsgi --socket mysite.sock --wsgi-file test.py --chmod-socket=664 # (более разумно).`
 
 
 Возможно, вам также придется добавить своего пользователя в группу nginx (которая, вероятно, является www-data) или наоборот, чтобы nginx мог правильно читать и писать в ваш сокет.
