@@ -55,16 +55,19 @@ source bin/activate
 
 Установите Django в virtualenv, создайте новый проект и перейдите в него:
 
+```
 pip install Django
 django-admin.py startproject mysite
 cd mysite
+```
 
 ---
 
 ## <a id="title2">Базовая установка и настройка uWSGI</a>
 ### <a id="title1.2">2.1 Установите uWSGI в virtualenv</a>
 
-pip install uwsgi
+`pip install uwsgi`
+
 Помните, что у вас должны быть установлены пакеты разработки Python. В случае Debian или производных от Debian систем, таких как Ubuntu, вам нужно установить pythonX.Y-dev, где X.Y - это ваша версия Python.
 
 Запустите для проверки uWSGI:
