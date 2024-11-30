@@ -1,7 +1,7 @@
 
 # Развертывание на Nginx + uWSGI
 (основано на https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
-> README в процессе доработки..., буду рад вашим замечаниям и правкам. :smiley:
+> README в процессе доработки..., буду рад вашим замечаниям и правкам. :EMOJICODE: smiley
 
 
 
