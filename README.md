@@ -319,6 +319,7 @@ gid: групповой идентификатор процесса после �
 
 ```
 /etc/systemd/system/uwsgi.service
+
 [Unit]
 Description=uWSGI Emperor service
 ```
@@ -329,6 +330,7 @@ Description=uWSGI Emperor service
 
 ```
 /etc/systemd/system/uwsgi.service
+
 [Unit]
 Description=uWSGI Emperor service
 
