@@ -155,7 +155,7 @@ sudo /etc/init.d/nginx restart
 
 ---
 
-### <a id="title4">4. Nginx, uWSGI и test.py </a>
+### <a id="title4">4 Nginx, uWSGI и test.py </a>
  
 Давайте заставим nginx обратиться к приложению test.py «hello world».
 
