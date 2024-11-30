@@ -2,6 +2,7 @@
 # Развертывание на Nginx + uWSGI
 (основано на https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
 
+
 Схема взаимодействия:
 
 the web client <-> the web server <-> the socket <-> uwsgi <-> Django
